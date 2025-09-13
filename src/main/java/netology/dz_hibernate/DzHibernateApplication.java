@@ -4,16 +4,23 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import netology.dz_hibernate.enums.Person;
+import netology.dz_hibernate.repository.PersonRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.Sort;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static ch.qos.logback.classic.spi.ThrowableProxyVO.build;
+import static org.hibernate.internal.util.collections.ArrayHelper.forEach;
 
 @SpringBootApplication
 public class DzHibernateApplication implements CommandLineRunner {
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Autowired
+    private PersonRepository personRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(DzHibernateApplication.class, args);
@@ -23,28 +30,30 @@ public class DzHibernateApplication implements CommandLineRunner {
     @Transactional
     public void run(String... args) throws Exception {
 
-        // создаем персону
-//        Person person = Person.builder()
-//                .name("Anna")
-//                .surname("Any")
-//                .age(22)
-//                .cityOfLiving("Moscow")
-//                .build();
-//        entityManager.persist(person);
+        // выводим список персон
+//        var person = personRepository.findAll();
+//        person.forEach(System.out::println);
 
-        // удаляем персону
-//        var person = entityManager.find(Person.class, 5);
-//        entityManager.remove(person);
+        // добавляем в таблицу персон
+//        var persons = new ArrayList<Person>();
+//        persons.add(Person.builder()
+//                .name("Oly")
+//                .surname("Olly")
+//                .age(26)
+//                .cityOfLiving("Voronezh").
+//                build());
+//
+//        persons.add(Person.builder()
+//                .name("Serzh")
+//                .surname("Serr")
+//                .age(28)
+//                .cityOfLiving("Kaluga").
+//                build());
+//
+//        personRepository.saveAll(persons);
 
-//        var persons = entityManager.createQuery("select p from Person p").getResultList();
-//        System.out.println(persons);
+//        personRepository.findAll(Sort.by(Sort.Direction.ASC, "age"))
+//                .forEach(System.out::println);
 
-        // запрос персон по городу проживания
-//        String city = "Moscow";
-//        var personsCity = entityManager.createQuery(
-//                "select p from Person p WHERE p.cityOfLiving = :city", Person.class);
-//        personsCity.setParameter("city", city);
-//        List<Person> personsInMoscow = personsCity.getResultList();
-//                System.out.println(personsInMoscow);
     }
 }
